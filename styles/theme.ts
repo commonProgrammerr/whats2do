@@ -5,7 +5,7 @@ export default {
 
 
     inverse: "#f1f1f2",
-    shadow: "#000",
+    shadow: "#000000",
     overlay: "#090e11",
     success: "#00af9c",
     danger: "#ef697a",
@@ -51,3 +51,12 @@ export default {
     }
   }
 }
+/*
+compose-input-background: #33383b;
+compose-input-background-focused: #3f5560;
+compose-input-border: #33383b;
+compose-input-border-focused: #415a67;
+compose-panel-background: #1e2428;
+compose-panel-background-hover: #161e23;
+compose-primary: #f1f1f2;
+*/
