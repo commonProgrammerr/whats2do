@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   display: flex;
-  padding: 3px 14px;
+  padding: 10px 14px;
   justify-content: space-between;
   background-color: ${({theme}) => theme.colors.header_background};
   color: ${({theme}) => theme.colors.text.primary_strong};
+  box-shadow: 0 1px 3px ${({theme}) => theme.colors.shadow};
   
   h1 {
     font-size: 1.5rem;

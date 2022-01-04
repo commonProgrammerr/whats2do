@@ -7,9 +7,6 @@ export const GlobalStyle = createGlobalStyle`
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', 'Roboto', sans-serif;
-}
-
-input, textarea, button {
   border: none;
   outline: 0;
 }
