@@ -30,11 +30,23 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: ${({theme}) => theme.colors.header_background}90;
+  background: ${({ theme }) => theme.colors.header_background}90;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: ${({theme}) => theme.colors.background_high_emphasis}8b;
+  background: ${({ theme }) => theme.colors.background_high_emphasis}8b;
+}
+
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 `;

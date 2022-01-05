@@ -62,7 +62,7 @@ function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
         open={isOpen}
         onClickCheck={() => tasks.update({ id, enable: false })}
         onClickDelete={() => tasks.delete(id)}
-        onClickEdit={() => console.log('edit')}
+        onClickEdit={() => tasks.openEditMode(id)}
       />
     </Container>
   );

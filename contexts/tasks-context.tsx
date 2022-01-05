@@ -41,8 +41,13 @@ export interface TaskData extends TaskDTO {
 
 interface TasksContextType {
   tasks: TaskData[];
+  editMode: {
+    open: boolean;
+    id: string;
+  };
   create(task: NewTaskDTO): Promise<void>;
-  // read(id:string): TaskDTO
+  openEditMode(id: string): void;
+  closeEditMode(): void;
   update(task: TaskUpdateDTO): Promise<void>;
   delete(id: string): Promise<void>;
 }
@@ -51,6 +56,10 @@ const tasksContext = createContext<TasksContextType | null>(null);
 
 export function TasksProvider({ children }: TasksProviderProps) {
   const [tasks, setTasks] = useState([] as TaskData[]);
+  const [editMode, setEditMode] = useState({
+    open: false,
+    id: "",
+  });
 
   useEffect(() => {
     (async () => {
@@ -63,6 +72,20 @@ export function TasksProvider({ children }: TasksProviderProps) {
     <tasksContext.Provider
       value={{
         tasks,
+        editMode, 
+        openEditMode(id) {
+          setEditMode({
+            open: true,
+            id,
+          });
+        },
+
+        closeEditMode() {
+          setEditMode({
+            open: false,
+            id: "",
+          });
+        },
         async create(task_data) {
           const new_task = (
             await crud_api.post("/tasks", {
@@ -89,6 +112,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
             });
           } catch (error) {}
         },
+
         async update(task_data) {
           try {
             const { data } = await crud_api.delete("/tasks/" + task_data.id);
