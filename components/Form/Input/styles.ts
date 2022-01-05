@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
-
 export const Input = styled.input`
+  font-size: .95rem;
   color: ${({ theme }) => theme.colors.text.secondary_lighter};
+  word-break: break-all;
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.text.placeholder};
+  }
   background-color: transparent;
 `;
 
@@ -13,7 +17,7 @@ export const Container = styled.div`
   background-color: #33383b;
   padding: 6px 16px;
   padding-top: 3px;
-  border-radius: 3px; 
+  border-radius: 6px; 
   margin-bottom: 18px;
   transition-delay: 0.1s;
   transition-duration: 0.4s;
@@ -25,10 +29,15 @@ export const Container = styled.div`
     box-shadow: 0 0 1px .8px ${({ theme }) => theme.colors.highlight};
     margin-top: 10px;
     
+    input {
+      transform: translateY(-35%);
+    }
+
     & > div {
       transform: translateY(-100%);
       & > label {
         font-size: .8rem;
+        margin-bottom: 3.5px;
         transform: translateX(-10%);
         font-weight: 600;
         color: ${({ theme }) => theme.colors.text.high_emphasis};

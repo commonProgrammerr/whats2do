@@ -23,10 +23,11 @@ export default {
     background_hover: "#1e2528",
     background_lighter: "#1e2528",
     header_background: "#2a2f32",
+    background_high_emphasis: "#056162",
     // background: "#131c21",
     // background_active: "#323739",
     // background_hover: "#2d3134",
-
+    
     app: {
       background: "#090e11",
       background_deeper: "#090e11",
@@ -40,7 +41,7 @@ export default {
       high_emphasis: "#00a884",
       medium_emphasis: "#7e98a8",
       
-      placeholder: lighten(0.15, "#00a884"),
+      placeholder: lighten(0.15, "#f1f1f260"),
       disabled: "#999"
     },
     

@@ -10,6 +10,7 @@ export const Container = styled.header`
   
   h1 {
     font-size: 1.5rem;
+    letter-spacing: 0.16rem;
     color: ${({theme}) => theme.colors.text.high_emphasis};
   }
   
@@ -18,6 +19,6 @@ export const Container = styled.header`
     align-items: center;
     font-size: 2rem;
     padding-right: 16px;
-    color: ${({theme}) => theme.colors.text.primary_strong};
+    color: ${({theme}) => theme.colors.icon.header};
   }
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Header from "../components/Layout/Header";
-import MainContent from "../components/MainContent";
+import MainContent from "../components/Layout/MainContent";
 
 export default function Home() {
   return (

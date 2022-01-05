@@ -10,7 +10,7 @@ function Header() {
   const git_url = process.env.GITHUB_REPO_URL
   return (
     <Container>
-      <h1>To-do List</h1>
+      <h1>Sua Lista</h1>
       <a href={git_url} className="git-container" >
         <FaGithub />
       </a>
