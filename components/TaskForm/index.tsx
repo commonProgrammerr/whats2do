@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useToasts } from "react-toast-notifications";
 import { useTasksList } from "../../contexts/tasks-context";
 import { crud_api } from "../../services/api";
 import { InputForm } from "../Form/Input";
@@ -20,22 +21,25 @@ const validation = {
 };
 
 function handleFormatDate(date: Date) {
-  console.log(date.getMonth())
-  const str = `${date.getFullYear().toLocaleString('iso', {
-    minimumIntegerDigits: 4,
-  }).replace('.', '')}-${(date.getMonth() + 1).toLocaleString('iso', {
+  console.log(date.getMonth());
+  const str = `${date
+    .getFullYear()
+    .toLocaleString("iso", {
+      minimumIntegerDigits: 4,
+    })
+    .replace(".", "")}-${(date.getMonth() + 1).toLocaleString("iso", {
     minimumIntegerDigits: 2,
-
-  })}-${date.getDay().toLocaleString('iso', {
+  })}-${date.getDay().toLocaleString("iso", {
     minimumIntegerDigits: 2,
   })}`;
   console.log(str);
 
-  return str
+  return str;
 }
 
 export function TaskForm() {
   const { create, update, editMode, closeEditMode } = useTasksList();
+  const { addToast } = useToasts();
 
   const {
     register,
@@ -56,9 +60,14 @@ export function TaskForm() {
             end_date: handleFormatDate(new Date(data.end_date)),
           });
         } else {
-          reset({})
+          reset({});
         }
-      } catch {}
+      } catch {
+        addToast('Não conseguimos atualizar essa tarefa! :(', {
+          appearance: 'error',
+          autoDismiss: true
+        })
+      }
     })();
   }, [editMode]);
 
@@ -77,17 +86,30 @@ export function TaskForm() {
               end_date: new Date(end_date),
               enable: true,
             });
+            addToast(task_name + '. Atualizada!', {
+              appearance: 'success',
+              autoDismiss: true
+            })
           } else {
             const task = {
               task_name,
               start_date: new Date(start_date).toISOString(),
               end_date: new Date(end_date).toISOString(),
             };
+            
             await create(task);
+            addToast(task_name + '. Adicionada!', {
+              appearance: 'success',
+              autoDismiss: true
+            })
           }
           reset();
         } catch (err) {
           console.error(err);
+          addToast('Não conseguimos concluir a opreação. ', {
+            appearance: 'error',
+            autoDismiss: true
+          })
         }
       })}
     >

@@ -39,14 +39,13 @@ body {
 }
 
 
-.overlay{
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.react-toast-notifications__toast {
+  color: ${({theme}) => theme.colors.text.medium_emphasis} !important;
+  background-color: ${({theme}) => theme.colors.background_overlay} !important;
+}
+
+.react-toast-notifications__toast__icon-wrapper {
+  background-color: ${({theme}) => theme.colors.icon.high_emphasis}90 !important;
+
 }
 `;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { useToasts } from "react-toast-notifications";
 import { TaskData, useTasksList } from "../../contexts/tasks-context";
 import { EditTaskPainel } from "../EditTaskPainel";
 import { Container } from "./styles";
@@ -11,6 +12,8 @@ interface TaskItemProps extends Pick<TaskData, "id" | "isNew"> {
 }
 
 function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
+  const { addToast } = useToasts();
+
   const [isOpen, setIsOpen] = useState(false);
   const tasks = useTasksList();
 
@@ -22,7 +25,11 @@ function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
   }
 
   return (
-    <Container isNewTask={isNew} onMouseEnter={handleOpenTaskPainel} onMouseLeave={handleCloseTaskPainel}>
+    <Container
+      isNewTask={isNew}
+      onMouseEnter={handleOpenTaskPainel}
+      onMouseLeave={handleCloseTaskPainel}
+    >
       <span>
         <svg viewBox="0 0 8 13" width="8" height="13">
           {isNew ? (
@@ -60,8 +67,20 @@ function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
       </section>
       <EditTaskPainel
         open={isOpen}
-        onClickCheck={() => tasks.update({ id, enable: false })}
-        onClickDelete={() => tasks.delete(id)}
+        onClickCheck={async () => {
+          await tasks.update({ id, enable: false });
+          addToast(`${task} concluida!`, {
+            appearance: "info",
+            autoDismiss: true
+          })
+        }}
+        onClickDelete={async () => {
+          await tasks.delete(id)
+          addToast(`${task} foi excluida!`, {
+            appearance: "warning",
+            autoDismiss: true
+          })
+        }}
         onClickEdit={() => tasks.openEditMode(id)}
       />
     </Container>
