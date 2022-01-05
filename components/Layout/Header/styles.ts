@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.header`
   display: flex;
   padding: 10px 14px;
+  height: 3.5rem;
   justify-content: space-between;
   background-color: ${({theme}) => theme.colors.header_background};
   color: ${({theme}) => theme.colors.text.primary_strong};
