@@ -25,6 +25,7 @@ function MainContent({}: MainContentProps) {
       <SecondColumn>
         {tasks.map((task) => (
           <TaskItem
+            id={task.id}
             isNew={task.isNew}
             key={task.id}
             task={task.task_name}

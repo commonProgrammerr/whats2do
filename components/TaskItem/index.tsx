@@ -1,11 +1,12 @@
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { TaskData } from "../../contexts/tasks-context";
 import { Container } from "./styles";
 
-interface TaskItemProps {
+interface TaskItemProps extends Pick<TaskData, "id" | 'isNew'> {
   task: string;
   start: Date;
   end: Date;
-  isNew?: boolean;
+  
 }
 
 function TaskItem({ task, start, end, isNew }: TaskItemProps) {

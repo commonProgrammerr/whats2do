@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   createContext,
   ReactNode,
@@ -13,7 +14,7 @@ interface TasksProviderProps {
   children: ReactNode;
 }
 
-interface TaskDTO {
+export interface TaskDTO {
   id: string;
   task_name: string;
   start_date: Date;
@@ -26,7 +27,7 @@ interface NewTaskDTO {
   end_date: string;
 }
 
-interface TaskData extends TaskDTO {
+export interface TaskData extends TaskDTO {
   enable?: boolean
   isNew?: boolean
 }
@@ -47,7 +48,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await crud_api.get("/tasks");
+      const { data } = await axios.get("./api/tasks");
       setTasks(data ? [...data] : []);
     })();
   }, []);
@@ -69,7 +70,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
             isNew: true
           }
           console.log(task)
-          return setTasks(tasks => [task, ...tasks])
+          return setTasks(tasks => [...tasks, task])
         }
 
       }}

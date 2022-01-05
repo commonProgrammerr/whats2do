@@ -53,9 +53,8 @@ export const Container = styled.div<StyleProps>`
   }
   
   ${(props) => props.isNewTask && css`
-    justify-content: flex-end;
+    flex-direction: row-reverse;
     & > span {
-      order: 1;
       color: ${({ theme }) => theme.colors.background_high_emphasis};
     }
     & > section {
