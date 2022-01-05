@@ -3,7 +3,6 @@ import { lighten } from 'polished'
 export default {
   colors: {
 
-
     inverse: "#f1f1f2",
     shadow: "#000000",
     overlay: "#090e11",
@@ -25,9 +24,6 @@ export default {
     header_background: "#2a2f32",
     background_high_emphasis: "#056162",
     background_overlay: "#262d31",
-    // background: "#131c21",
-    // background_active: "#323739",
-    // background_hover: "#2d3134",
     
     app: {
       background: "#090e11",
@@ -47,18 +43,10 @@ export default {
     },
     
     icon: {
+      primary: "#d4d5d7",
       header: "#b1b3b5",
       medium_emphasis: "#7e98a8",
       high_emphasis: "#00a884",
     }
   }
 }
-/*
-compose-input-background: #33383b;
-compose-input-background-focused: #3f5560;
-compose-input-border: #33383b;
-compose-input-border-focused: #415a67;
-compose-panel-background: #1e2428;
-compose-panel-background-hover: #161e23;
-compose-primary: #f1f1f2;
-*/

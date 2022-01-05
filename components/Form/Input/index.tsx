@@ -3,17 +3,17 @@ import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 import { Input, Error, Container, Label } from "./styles";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props<T> extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  register: UseFormRegister<T>;
   name: string;
-  register: UseFormRegister<any>;
   options?: RegisterOptions<any, any>;
   error?: {
-    [key: string]: Error;
+    [key: keyof T]: Error;
   };
 }
 
-export function InputForm({ name, register, options, error, label, ...rest }: Props) {
+export function InputForm<T>({ name, register, options, error, label, ...rest }: Props<T>) {
   return (
     <Container>
       <div>

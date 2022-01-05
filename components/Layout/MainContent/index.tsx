@@ -23,7 +23,7 @@ function MainContent({}: MainContentProps) {
         <AddTaskForm />
       </FirstColumn>
       <SecondColumn>
-        {tasks.map((task) => (
+        {tasks.filter(task => task.enable).map((task) => (
           <TaskItem
             id={task.id}
             isNew={task.isNew}

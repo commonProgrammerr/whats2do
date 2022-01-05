@@ -11,7 +11,14 @@ export const Container = styled.div<StyleProps>`
   align-items: flex-start;
   box-shadow: 0 1px 0.5px ${({ theme }) => theme.colors.shadow}0d;
   color: ${({ theme }) => theme.colors.text.primary_strong}f0;
-  
+  padding: 10px;
+  padding-left: 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({theme}) => theme.colors.highlight}16;
+  }
+
   & > span {
     margin-top: -5px;
     color: ${({ theme }) => theme.colors.background_overlay};
@@ -54,6 +61,8 @@ export const Container = styled.div<StyleProps>`
   
   ${(props) => props.isNewTask && css`
     flex-direction: row-reverse;
+    padding-left: 10px;
+    padding-right: 0;
     & > span {
       color: ${({ theme }) => theme.colors.background_high_emphasis};
     }

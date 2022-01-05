@@ -1,17 +1,25 @@
+import { useState } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { TaskData } from "../../contexts/tasks-context";
+import { TaskData, useTasksList } from "../../contexts/tasks-context";
+import { EditTaskPainel } from "../EditTaskPainel";
 import { Container } from "./styles";
 
-interface TaskItemProps extends Pick<TaskData, "id" | 'isNew'> {
+interface TaskItemProps extends Pick<TaskData, "id" | "isNew"> {
   task: string;
   start: Date;
   end: Date;
-  
 }
 
-function TaskItem({ task, start, end, isNew }: TaskItemProps) {
+function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const tasks = useTasksList();
+
+  function handleOpenTaskPainel() {
+    setIsOpen((state) => !state);
+  }
+
   return (
-    <Container isNewTask={isNew}>
+    <Container isNewTask={isNew} onClick={handleOpenTaskPainel}>
       <span>
         <svg viewBox="0 0 8 13" width="8" height="13">
           {isNew ? (
@@ -47,6 +55,12 @@ function TaskItem({ task, start, end, isNew }: TaskItemProps) {
           {start?.toLocaleDateString?.()} - {end?.toLocaleDateString?.()}
         </span>
       </section>
+      <EditTaskPainel
+        open={isOpen}
+        onClickCheck={() => tasks.update({ id, enable: false })}
+        onClickDelete={() => tasks.delete(id)}
+        onClickEdit={console.log}
+      />
     </Container>
   );
 }

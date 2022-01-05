@@ -23,6 +23,7 @@ function AddTaskForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormInputs>();
 
@@ -36,6 +37,7 @@ function AddTaskForm() {
             start_date: new Date(start_date).toISOString(),
             end_date: new Date(end_date).toISOString(),
           });
+          reset()
         } catch (err) {
           console.error(err);
         }
@@ -45,7 +47,7 @@ function AddTaskForm() {
         type="text"
         label="Atividade"
         name="task_name"
-        placeholder="nome da atividade"
+        placeholder="Descrição da atividade"
         error={errors}
         options={validation}
         register={register}

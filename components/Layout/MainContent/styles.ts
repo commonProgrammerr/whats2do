@@ -24,7 +24,6 @@ export const SecondColumn = styled.section`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
   padding: 16px;
   padding-right: 32px;
   overflow-y: auto;
