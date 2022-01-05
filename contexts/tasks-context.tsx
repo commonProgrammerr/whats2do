@@ -115,7 +115,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
 
         async update(task_data) {
           try {
-            const { data } = await crud_api.delete("/tasks/" + task_data.id);
+            const { data } = await crud_api.put("/tasks/" + task_data.id);
             setTasks((tasksList) => {
               return tasksList.map((task) =>
                 task.id !== data?.id ? task : { ...task, ...task_data }
