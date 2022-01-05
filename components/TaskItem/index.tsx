@@ -15,11 +15,14 @@ function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
   const tasks = useTasksList();
 
   function handleOpenTaskPainel() {
-    setIsOpen((state) => !state);
+    !isOpen && setIsOpen(true);
+  }
+  function handleCloseTaskPainel() {
+    isOpen && setIsOpen(false);
   }
 
   return (
-    <Container isNewTask={isNew} onClick={handleOpenTaskPainel}>
+    <Container isNewTask={isNew} onMouseEnter={handleOpenTaskPainel} onMouseLeave={handleCloseTaskPainel}>
       <span>
         <svg viewBox="0 0 8 13" width="8" height="13">
           {isNew ? (
@@ -59,7 +62,7 @@ function TaskItem({ id, task, start, end, isNew }: TaskItemProps) {
         open={isOpen}
         onClickCheck={() => tasks.update({ id, enable: false })}
         onClickDelete={() => tasks.delete(id)}
-        onClickEdit={console.log}
+        onClickEdit={() => console.log('edit')}
       />
     </Container>
   );

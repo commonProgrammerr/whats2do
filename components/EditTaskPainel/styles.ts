@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 interface StyledProps {
   disabled?: boolean
@@ -15,6 +15,7 @@ export const Container = styled.div<StyledProps>`
   color: ${({ theme }) => theme.colors.primary_strongest};
 
   button {
+    z-index: 400;
     border-radius: 100px;
     color: ${({ theme }) => theme.colors.icon.primary};
     font-size: 1.2rem;

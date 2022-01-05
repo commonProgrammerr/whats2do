@@ -9,7 +9,6 @@ import {
 } from "react";
 import { crud_api } from "../services/api";
 
-
 interface TasksProviderProps {
   children: ReactNode;
 }
@@ -19,7 +18,7 @@ export interface TaskDTO {
   task_name: string;
   start_date: Date;
   end_date: Date;
-};
+}
 
 interface NewTaskDTO {
   task_name: string;
@@ -27,21 +26,28 @@ interface NewTaskDTO {
   end_date: string;
 }
 
+interface TaskUpdateDTO {
+  id: string;
+  task_name?: string;
+  start_date?: Date;
+  end_date?: Date;
+  enable?: boolean;
+}
+
 export interface TaskData extends TaskDTO {
-  enable?: boolean
-  isNew?: boolean
+  enable?: boolean;
+  isNew?: boolean;
 }
 
 interface TasksContextType {
-  tasks: TaskData[]
-  create(task: NewTaskDTO): Promise<void>
+  tasks: TaskData[];
+  create(task: NewTaskDTO): Promise<void>;
   // read(id:string): TaskDTO
-  // update(task: TaskDTO): Promise<void>
-  // delete(id: string): Promise<void>
+  update(task: TaskUpdateDTO): Promise<void>;
+  delete(id: string): Promise<void>;
 }
 
 const tasksContext = createContext<TasksContextType | null>(null);
-
 
 export function TasksProvider({ children }: TasksProviderProps) {
   const [tasks, setTasks] = useState([] as TaskData[]);
@@ -58,21 +64,41 @@ export function TasksProvider({ children }: TasksProviderProps) {
       value={{
         tasks,
         async create(task_data) {
-          const new_task = (await crud_api.post('/tasks', {
-            ...task_data,
-            enable: true
-          })).data as TaskDTO
+          const new_task = (
+            await crud_api.post("/tasks", {
+              ...task_data,
+              enable: true,
+            })
+          ).data as TaskDTO;
 
           const task = {
             ...new_task,
             start_date: new Date(new_task.start_date),
             end_date: new Date(new_task.end_date),
-            isNew: true
-          }
-          console.log(task)
-          return setTasks(tasks => [...tasks, task])
-        }
+            isNew: true,
+          };
+          console.log(task);
+          return setTasks((tasks) => [...tasks, task]);
+        },
 
+        async delete(id) {
+          try {
+            const { data } = await crud_api.delete("/tasks/" + id);
+            setTasks((tasksList) => {
+              return tasksList.filter((task) => task.id !== data?.id);
+            });
+          } catch (error) {}
+        },
+        async update(task_data) {
+          try {
+            const { data } = await crud_api.delete("/tasks/" + task_data.id);
+            setTasks((tasksList) => {
+              return tasksList.map((task) =>
+                task.id !== data?.id ? task : { ...task, ...task_data }
+              );
+            });
+          } catch (error) {}
+        },
       }}
     >
       {children}

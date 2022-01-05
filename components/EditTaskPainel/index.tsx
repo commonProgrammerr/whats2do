@@ -12,18 +12,25 @@ interface EditTaskPainelProps {
   onClickDelete: () => void;
 }
 
-export function EditTaskPainel({ open }: EditTaskPainelProps) {
+export function EditTaskPainel({
+  open,
+  onClickCheck,
+  onClickEdit,
+  onClickDelete,
+}: EditTaskPainelProps) {
   return (
-    <Container disabled={!open}>
-      <Button bgColor="background_high_emphasis">
-        <RiCheckDoubleLine />
-      </Button>
-      <Button bgColor="background_high_emphasis">
-        <FaEdit />
-      </Button>
-      <Button bgColor="background_high_emphasis">
-        <FaRegTrashAlt />
-      </Button>
-    </Container>
+    open && (
+      <Container disabled={!open}>
+        <Button onClick={onClickCheck} bgColor="background_high_emphasis">
+          <RiCheckDoubleLine />
+        </Button>
+        <Button onClick={onClickEdit} bgColor="background_high_emphasis">
+          <FaEdit />
+        </Button>
+        <Button onClick={onClickDelete} bgColor="background_high_emphasis">
+          <FaRegTrashAlt />
+        </Button>
+      </Container>
+    )
   );
 }
