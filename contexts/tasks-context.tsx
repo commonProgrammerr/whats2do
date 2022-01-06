@@ -74,7 +74,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
         },
 
         insert(new_tasks) {
-          return setTasks([...tasks, ...new_tasks]);
+          return setTasks(tasks => [...tasks, ...new_tasks]);
         },
 
         openEditMode(id) {

@@ -10,9 +10,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const page = Number(req.query.page)
     const limit = Number(req.query.limit)
+
     const response_data = [...valid_tasks].slice((page - 1) * limit, limit * page)
     
     return res.status(status).json(response_data as TaskDTO[])
+
   } catch (error) {
     console.error(error)
     return res.status(400).json({

@@ -5,14 +5,40 @@ import { TaskData, useTasksList } from "../../../contexts/tasks-context";
 import { DateCheck } from "../DateCheck";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useToasts } from "react-toast-notifications";
 
 function MainContent() {
-  const [hasNext, setHasNext] = useState(true);
+  const { addToast } = useToasts();
   const { tasks, insert, reset } = useTasksList();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const valid_tasks = tasks.filter((task) => task.enable);
   const loaderRef = useRef(null);
+
+  async function handleLoadPage() {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("./api/tasks", {
+        params: {
+          page,
+          limit: 10,
+        },
+      });
+
+      if (data?.length) {
+        insert(data as TaskData[]);
+      }
+    } catch (error) {
+      console.error(error);
+      addToast("Não foi possivel carergar mais!", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     const options = {
@@ -21,35 +47,14 @@ function MainContent() {
       threshold: 1.0,
     };
 
-    if (page < 1) {
-      (async () => {
-        const { data } = await axios.get("./api/tasks", {
-          params: {
-            page: 1,
-            limit: 16,
-          },
-        });
-        console.log(data);
-        setPage(2);
-        reset(data as TaskData[]);
-      })();
-    }
+    handleLoadPage();
 
     const observer = new IntersectionObserver(async (entities) => {
       const target = entities[0];
 
       if (target.isIntersecting) {
-        const { data } = await axios.get("./api/tasks", {
-          params: {
-            page,
-            limit: 8,
-          },
-        });
-        console.log(data);
-        if (data?.length) {
-          insert(data as TaskData[]);
-          setPage(page + 1);
-        }
+        console.log("loading");
+        setPage(page => page + 1);
       }
     }, options);
 
@@ -57,6 +62,12 @@ function MainContent() {
       observer.observe(loaderRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      handleLoadPage();
+    }
+  }, [page]);
 
   return (
     <Container>
