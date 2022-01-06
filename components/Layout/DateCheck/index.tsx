@@ -45,7 +45,6 @@ export function DateCheck() {
       <InputForm
         label="Checar data"
         type="date"
-        name="teste"
         onChange={(e) => {
           e.preventDefault();
           setValue(e.target.value);
