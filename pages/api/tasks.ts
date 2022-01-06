@@ -13,6 +13,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const response_data = [...valid_tasks].slice((page - 1) * limit, limit * page)
     
+    if(response_data.length === 0)
+      return res.status(404).json(response_data as TaskDTO[])
+    
     return res.status(status).json(response_data as TaskDTO[])
 
   } catch (error) {

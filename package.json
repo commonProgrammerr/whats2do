@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@n8tb1t/use-scroll-position": "^2.0.3",
     "axios": "^0.24.0",
     "next": "latest",
     "polished": "^4.1.3",

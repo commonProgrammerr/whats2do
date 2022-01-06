@@ -6,6 +6,7 @@ import { DateCheck } from "../DateCheck";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useToasts } from "react-toast-notifications";
+import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 
 function MainContent() {
   const { addToast } = useToasts();
@@ -14,7 +15,35 @@ function MainContent() {
   const [loading, setLoading] = useState(true);
 
   const valid_tasks = tasks.filter((task) => task.enable);
+  const scrollRef = useRef(null);
   const loaderRef = useRef(null);
+
+  useScrollPosition(
+    ({ currPos }) => {
+      if (currPos.y < 20 && !loading) {
+        console.log(currPos.y);
+        setPage((page) => page + 1);
+      }
+    },
+    [loading],
+    loaderRef,
+    false,
+    300,
+    scrollRef
+  );
+
+  useEffect(() => {
+    if (!loading) {
+      handleLoadPage();
+    }
+    console.log(tasks)
+  }, [page]);
+
+  useEffect(() => {
+    if (page === 1) {
+      handleLoadPage();
+    }
+  }, []);
 
   async function handleLoadPage() {
     try {
@@ -31,7 +60,7 @@ function MainContent() {
       }
     } catch (error) {
       console.error(error);
-      addToast("Não foi possivel carergar mais!", {
+      addToast("Não é possivel carergar mais!", {
         appearance: "error",
         autoDismiss: true,
       });
@@ -40,42 +69,13 @@ function MainContent() {
     }
   }
 
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 1.0,
-    };
-
-    handleLoadPage();
-
-    const observer = new IntersectionObserver(async (entities) => {
-      const target = entities[0];
-
-      if (target.isIntersecting) {
-        console.log("loading");
-        setPage(page => page + 1);
-      }
-    }, options);
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      handleLoadPage();
-    }
-  }, [page]);
-
   return (
     <Container>
       <FirstColumn>
         <DateCheck />
         <TaskForm />
       </FirstColumn>
-      <SecondColumn>
+      <SecondColumn ref={scrollRef}>
         <div>
           {valid_tasks.map((task, i) => (
             <TaskItem
@@ -87,8 +87,8 @@ function MainContent() {
               start={new Date(task.start_date)}
             />
           ))}
-          <p ref={loaderRef}>loading...</p>
         </div>
+        <p ref={loaderRef}>.</p>
       </SecondColumn>
     </Container>
   );
