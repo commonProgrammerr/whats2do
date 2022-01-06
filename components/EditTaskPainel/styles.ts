@@ -1,10 +1,7 @@
+import { darken } from 'polished';
 import styled from 'styled-components';
 
-interface StyledProps {
-  disabled?: boolean
-}
-
-export const Container = styled.div<StyledProps>`
+export const Container = styled.div`
   display: flex;
   flex-direction: inherit;
   align-items: center;
@@ -20,16 +17,24 @@ export const Container = styled.div<StyledProps>`
     color: ${({ theme }) => theme.colors.icon.primary};
     font-size: 1.2rem;
     &:focus-within {
-      background-color: ${({ theme }) => theme.colors.highlight};
+      background-color: ${({ theme }) => darken(0.01, theme.colors.highlight)};
     }
     
-    &:not(:first-of-type) {
-      svg {
-        padding: .19rem;
-      }
+  }
+  .delete-button {
+    svg {
+      padding: .14rem;
     }
   }
-
+  .edit-button {
+    svg {
+      padding: .1rem;
+    }
+    &:focus-within {
+      color: ${({ theme }) => theme.colors.inverse};
+    }
+  }
+  
   &[disabled] {
     flex: none;
     display: none;
