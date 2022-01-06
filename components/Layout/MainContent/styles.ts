@@ -23,9 +23,21 @@ export const FirstColumn = styled.section`
 export const SecondColumn = styled.section`
   flex: 1;
   display: flex;
-  flex-direction: column;
-  padding: 16px;
+  flex-direction: column-reverse;
+  padding: 0;
+  padding-left: 16px;
   padding-right: 32px;
+  
   overflow-y: auto;
   scroll-padding-top: 100%;
+
+  &> div {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 16px 0;
+  }
+  p {
+    flex: 1;
+    background: red;
+  }
 `

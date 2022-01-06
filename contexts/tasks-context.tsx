@@ -45,9 +45,11 @@ interface TasksContextType {
     open: boolean;
     id: string;
   };
-  create(task: NewTaskDTO): Promise<void>;
   openEditMode(id: string): void;
   closeEditMode(): void;
+  reset(tasks: TaskData[]): void;
+  insert(tasks: TaskData[]): void;
+  create(task: NewTaskDTO): Promise<void>;
   update(task: TaskUpdateDTO): Promise<void>;
   delete(id: string): Promise<void>;
 }
@@ -61,18 +63,20 @@ export function TasksProvider({ children }: TasksProviderProps) {
     id: "",
   });
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await axios.get("./api/tasks");
-      setTasks(data ? [...data] : []);
-    })();
-  }, []);
-
   return (
     <tasksContext.Provider
       value={{
         tasks,
-        editMode, 
+        editMode,
+
+        reset(tasks) {
+          return setTasks(tasks);
+        },
+
+        insert(new_tasks) {
+          return setTasks([...tasks, ...new_tasks]);
+        },
+
         openEditMode(id) {
           setEditMode({
             open: true,
@@ -86,6 +90,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
             id: "",
           });
         },
+
         async create(task_data) {
           const new_task = (
             await crud_api.post("/tasks", {
@@ -101,7 +106,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
             isNew: true,
           };
           console.log(task);
-          return setTasks((tasks) => [...tasks, task]);
+          return setTasks((tasks) => [task, ...tasks]);
         },
 
         async delete(id) {
