@@ -7,7 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { data, status } = await crud_api.get('/tasks', {
       params: req.query
     })
-    console.log(data)
     const valid_tasks = data?.filter(task => task.enable)
     
     return res.status(status).json(valid_tasks as TaskDTO[])

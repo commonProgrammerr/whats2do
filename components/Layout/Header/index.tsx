@@ -7,7 +7,7 @@ interface HeaderProps {
 }
 
 function Header() {
-  const git_url = process.env.GITHUB_REPO_URL
+  const git_url = 'https://github.com/commonProgrammerr/whats2do'
   return (
     <Container>
       <h1>What'sToDo</h1>

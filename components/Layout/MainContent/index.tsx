@@ -2,22 +2,14 @@ import TaskItem from "../../TaskItem";
 import { Container, FirstColumn, SecondColumn } from "./styles";
 import { TaskForm } from "../../TaskForm";
 import { useTasksList } from "../../../contexts/tasks-context";
+import { DateCheck } from "../DateCheck";
 
-type TaskDTO = {
-  id: string;
-  task_name: string;
-  start_date: string;
-  end_date: string;
-  enable: boolean;
-};
-
-interface MainContentProps {}
-
-function MainContent({}: MainContentProps) {
+function MainContent() {
   const { tasks } = useTasksList();
   return (
     <Container>
       <FirstColumn>
+        <DateCheck />
         <TaskForm />
       </FirstColumn>
       <SecondColumn>

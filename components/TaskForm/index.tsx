@@ -29,7 +29,7 @@ function handleFormatDate(date: Date) {
     })
     .replace(".", "")}-${(date.getMonth() + 1).toLocaleString("iso", {
     minimumIntegerDigits: 2,
-  })}-${date.getDay().toLocaleString("iso", {
+  })}-${date.getDate().toLocaleString("iso", {
     minimumIntegerDigits: 2,
   })}`;
   console.log(str);

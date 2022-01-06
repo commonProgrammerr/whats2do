@@ -26,7 +26,7 @@ export const Form = styled.form`
   input[type="submit"] {
     justify-self: flex-end;
     font-weight: 600;
-    background-color: ${({ theme }) => theme.colors.highlight};
+    background-color: ${({ theme }) => theme.colors.background_high_emphasis};
     color: ${({ theme }) => theme.colors.primary};
     border-radius: 3px;
     min-height: 32px;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Input = styled.input`
   font-size: .95rem;
@@ -11,7 +11,7 @@ export const Input = styled.input`
 `;
 
 
-export const Container = styled.div`
+export const Container = styled.div<{ label: boolean }>`
   display: flex;
   flex-direction: column;
   background-color: #33383b;
@@ -29,23 +29,25 @@ export const Container = styled.div`
     box-shadow: 0 0 1px .8px ${({ theme }) => theme.colors.highlight};
     margin-top: 10px;
     
-    input {
-      transform: translateY(-35%);
-    }
+    ${props => props.label && css`
+      input {
+        transform: translateY(-35%);
+      }
+      & > div {
+        transform: translateY(-100%);
+        & > label {
+          font-size: .8rem;
+          margin-bottom: 3.5px;
+          transform: translateX(-10%);
+          font-weight: 600;
+          color: ${({ theme }) => theme.colors.text.high_emphasis};
+        }
+        & > small {
+          transform: translateY(100%);
+        }
+      }
+    `}
 
-    & > div {
-      transform: translateY(-100%);
-      & > label {
-        font-size: .8rem;
-        margin-bottom: 3.5px;
-        transform: translateX(-10%);
-        font-weight: 600;
-        color: ${({ theme }) => theme.colors.text.high_emphasis};
-      }
-      & > small {
-        transform: translateY(100%);
-      }
-    }
   }
 `;
 
